@@ -1,4 +1,5 @@
-/*Данный скрипт подсчитывает количество уникальных покупателей из таблицы customers.*/
+/*Данный скрипт подсчитывает количество уникальных
+покупателей из таблицы customers.*/
 
 select count(customer_id) as customers_count
 from
@@ -23,10 +24,11 @@ order by
     income desc
 limit 10;
 
-/*Данный скрипт дает информацию о продавцах, чья средняя выручка за сделку меньше средней выручки за сделку по всем продавцам.*/
+/*Данный скрипт дает информацию о продавцах, чья средняя выручка
+за сделку меньше средней выручки за сделку по всем продавцам.*/
 
 select
-    e.first_name || ' ' || e.last_name as name,
+    e.first_name || ' ' || e.last_name as seller,
     floor(avg(s.quantity * p.price)) as average_income
 from
     sales as s
@@ -92,7 +94,8 @@ group by
         else '40+'
     end;
 
-/*Данный скрипт дает данные по количеству уникальных покупателей и выручке, которую они принесли*/
+/*Данный скрипт дает данные по количеству уникальных покупателей и выручке, 
+которую они принесли*/
 
 select
     to_char(s.sale_date, 'YYYY-MM') as selling_month,
@@ -107,7 +110,8 @@ order by
     selling_month;
 
 
-/*Данный скрипт дает инфо о покупателях, первая покупка которых была в ходе проведения акций (акционные товары отпускали со стоимостью равной 0)*/
+/*Данный скрипт дает инфо о покупателях, первая покупка которых была
+в ходе проведения акций (акционные товары отпускали со стоимостью равной 0)*/
 
 select
     customer,
@@ -133,7 +137,7 @@ from
         left join products as p
             on s.product_id = p.product_id
         order by
-            customer_id, customer, sale_date
+            s.customer_id, customer, s.sale_date
     ) as t1
 where
     rnk = 1 and price = 0
@@ -141,12 +145,6 @@ group by
     customer,
     sale_date,
     seller;
-
-
-
-
-
-
 
 
 
